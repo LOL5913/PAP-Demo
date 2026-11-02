@@ -1,0 +1,7 @@
+CNC LASER — CENTRO DE APOIO — VERSÃO 3
+
+Abrir: extrai o ZIP e abre index.html num navegador.
+Mantém a pasta assets junto dos ficheiros HTML/CSS/JS.
+O manual PDF é um modelo inicial baseado no desenho CAD e na lista de compras partilhados.
+Preços transcritos das capturas e sujeitos a alteração. Confirma todas as referências, quantidades e compatibilidades antes de comprar.
+O site é estático e não inclui alojamento nem base de dados.
