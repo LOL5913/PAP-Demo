@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CNC Laser</title>
+  <meta name="description" content="CNC Laser: gravação e corte a laser com precisão de CNC.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%2320242B'/%3E%3Cpath d='M27 13.5A9 9 0 1 0 27 26.5' stroke='%23E4E7EB' stroke-width='3.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20H36' stroke='%23E2231A' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    /* Aplica o tema antes de a página aparecer, para não piscar */
+    (function () {
+      var t;
+      try { t = localStorage.getItem("tema"); } catch (e) {}
+      if (t !== "claro" && t !== "escuro") {
+        t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+      }
+      document.documentElement.dataset.tema = t;
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="topo">
+    <!-- Logótipo (canto superior esquerdo) -->
+    <a class="logo" href="#inicio" data-go="inicio" aria-label="CNC Laser, ir para o início">
+      <svg class="logo-marca" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="9" fill="#20242B"/>
+        <path d="M27 13.5A9 9 0 1 0 27 26.5" stroke="#E4E7EB" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M20 20H39" stroke="#E2231A" stroke-width="2"/>
+        <circle cx="20" cy="20" r="2.8" fill="#E2231A"/>
+      </svg>
+      <span class="logo-nome">CNC Laser</span>
+    </a>
+
+    <!-- Botões (canto superior direito) -->
+    <nav class="menu" aria-label="Principal">
+      <button type="button" data-go="inicio">Início</button>
+      <button type="button" data-go="informacoes">Informações</button>
+      <button type="button" data-go="downloads">Downloads</button>
+      <button type="button" data-go="suporte">Suporte</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- TELA: INÍCIO -->
+    <section id="view-inicio" class="tela tela-inicio" aria-labelledby="t-inicio">
+      <div class="inicio-texto">
+        <h1 id="t-inicio" tabindex="-1">CNC Laser</h1>
+        <p class="lead">Gravação e corte a laser com a precisão de uma máquina CNC.</p>
+        <div class="acoes">
+          <button type="button" class="btn btn-principal" data-go="informacoes">Ver informações</button>
+          <button type="button" class="btn" data-go="suporte">Falar com o suporte</button>
+        </div>
+      </div>
+
+      <!--
+        IMAGEM DA IMPRESSORA
+        Quando tiveres uma foto real, apaga o <svg> abaixo e usa:
+        <img src="imagens/impressora.jpg" alt="Impressora CNC Laser">
+      -->
+      <div class="maquina" id="imagem-impressora">
+        <svg viewBox="0 0 600 400" role="img" aria-label="Ilustração da impressora CNC Laser a gravar uma tábua de madeira">
+          <defs>
+            <pattern id="grelha" width="14" height="14" patternUnits="userSpaceOnUse">
+              <path d="M14 0H0V14" fill="none" stroke="#2f7a5b" stroke-width=".8" opacity=".55"/>
+            </pattern>
+          </defs>
+
+          <!-- base -->
+          <rect x="30" y="318" width="540" height="56" rx="8" fill="#20242B"/>
+          <rect x="52" y="338" width="64" height="16" rx="3" fill="#323843"/>
+          <circle cx="132" cy="346" r="4" fill="#E2231A"/>
+
+          <!-- tapete de corte -->
+          <rect x="90" y="296" width="420" height="22" fill="#3a8f6b"/>
+          <rect x="90" y="296" width="420" height="22" fill="url(#grelha)"/>
+
+          <!-- madeira -->
+          <rect x="150" y="280" width="300" height="18" rx="2" fill="#C79B63"/>
+          <rect x="150" y="280" width="300" height="3" fill="#D8B27F"/>
+          <rect class="gravado" x="170" y="287" width="260" height="3" rx="1.5" fill="#5a3a1c"/>
+
+          <!-- colunas e pórtico -->
+          <rect x="52" y="86" width="34" height="240" rx="4" fill="#2a2f38"/>
+          <rect x="514" y="86" width="34" height="240" rx="4" fill="#2a2f38"/>
+          <rect x="52" y="86" width="496" height="34" rx="5" fill="#20242B"/>
+          <rect x="86" y="96" width="428" height="4" rx="2" fill="#4b5260"/>
+          <rect x="86" y="106" width="428" height="4" rx="2" fill="#4b5260"/>
+
+          <!-- cabeça laser + feixe -->
+          <g class="cabeca">
+            <rect x="152" y="92" width="36" height="32" rx="4" fill="#E4E7EB"/>
+            <rect x="161" y="124" width="18" height="46" rx="3" fill="#C3C8CF"/>
+            <rect x="166" y="170" width="8" height="12" fill="#20242B"/>
+            <line class="feixe" x1="170" y1="182" x2="170" y2="288" stroke="#E2231A" stroke-width="2.4"/>
+            <circle class="ponto" cx="170" cy="288" r="5" fill="#E2231A"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- TELA: INFORMAÇÕES -->
+    <section id="view-informacoes" class="tela tela-texto tela-larga" aria-labelledby="t-info" hidden>
+      <h1 id="t-info" tabindex="-1">Informações</h1>
+      <p class="lead">Tudo o que precisas de saber sobre a CNC Laser.</p>
+
+      <h2>Como funciona</h2>
+      <ol class="passos">
+        <li><strong>Desenha</strong> o teu trabalho num programa de design ou escolhe um ficheiro pronto.</li>
+        <li><strong>Prepara</strong> o ficheiro: define o material, a potência e a velocidade.</li>
+        <li><strong>Grava ou corta</strong>: a máquina segue o desenho com o feixe de laser.</li>
+      </ol>
+
+      <h2>Especificações</h2>
+
+      <div class="especs">
+
+        <!-- ÁREA DE TRABALHO -->
+        <article class="espec">
+          <div class="espec-texto">
+            <h3>Área de trabalho</h3>
+            <p class="valor" id="valor-area">Medidas a definir</p>
+            <p>A cabeça do laser anda em dois eixos: o carro desliza entre as duas placas laterais e o laser sobe e desce na guia que sai dele.</p>
+          </div>
+          <figure class="espec-visual">
+            <!-- Quando tiveres a vista de cima do Onshape, podes trocar este SVG por: <img src="imagens/vista-de-cima.png" alt="Vista de cima da impressora"> -->
+            <svg viewBox="0 0 520 330" role="img" aria-label="Vista de cima da impressora CNC Laser com as medidas da área de trabalho">
+              <defs>
+                <marker id="seta-area" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+                </marker>
+              </defs>
+
+              <!-- área de trabalho -->
+              <rect x="120" y="40" width="280" height="170" fill="none" stroke="currentColor" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+              <!-- medidas -->
+              <g class="medida" fill="currentColor" stroke="currentColor">
+                <line x1="122" y1="26" x2="398" y2="26" stroke-width="1.5" marker-start="url(#seta-area)" marker-end="url(#seta-area)"/>
+                <text x="260" y="18" text-anchor="middle" stroke="none" data-medida="y">Y: a definir</text>
+                <line x1="430" y1="42" x2="430" y2="208" stroke-width="1.5" marker-start="url(#seta-area)" marker-end="url(#seta-area)"/>
+                <text x="450" y="125" text-anchor="middle" stroke="none" transform="rotate(90 450 125)" data-medida="x">X: a definir</text>
+              </g>
+
+              <!-- placas laterais -->
+              <rect x="46" y="150" width="14" height="150" rx="2" fill="#C79B63" stroke="#7a5424"/>
+              <rect x="460" y="150" width="14" height="150" rx="2" fill="#C79B63" stroke="#7a5424"/>
+
+              <!-- guia e correia do eixo que liga as placas -->
+              <rect x="60" y="222" width="400" height="14" fill="#C3C8CF" stroke="#8d949e"/>
+              <line x1="72" y1="229" x2="448" y2="229" stroke="#8d949e" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 18"/>
+              <line x1="60" y1="244" x2="460" y2="244" stroke="currentColor" stroke-width="3"/>
+
+              <!-- carro + guia que sai dele + cabeça do laser -->
+              <g transform="translate(150 0)">
+                <g class="carro-y">
+                  <rect x="-6" y="34" width="12" height="190" fill="#C3C8CF" stroke="#8d949e"/>
+                  <line x1="-10" y1="34" x2="-10" y2="214" stroke="currentColor" stroke-width="2"/>
+                  <rect x="-34" y="214" width="68" height="48" rx="3" fill="#C79B63" stroke="#7a5424"/>
+                  <rect x="-28" y="222" width="22" height="22" rx="2" fill="#2c3037"/>
+                  <circle cx="-17" cy="233" r="4" fill="#cfd3d9"/>
+                  <rect x="6" y="222" width="22" height="22" rx="2" fill="#2c3037"/>
+                  <circle cx="17" cy="233" r="4" fill="#cfd3d9"/>
+                  <g class="cabeca-x">
+                    <rect x="-14" y="-10" width="28" height="20" rx="3" fill="#20242B"/>
+                    <circle class="ponto-v" r="4" fill="#E2231A"/>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </figure>
+        </article>
+
+        <!-- POTÊNCIA DO LASER -->
+        <article class="espec">
+          <div class="espec-texto">
+            <h3>Potência do laser</h3>
+            <p class="valor">Laser Tree 10W (LT-40W-AA)</p>
+            <p>Alimentação de 12 V com controlo de potência por PWM. Comprimento de onda de 450 nm (laser azul).</p>
+            <p>Usa sempre óculos de proteção OD5+ (200–540 nm) quando a máquina estiver a funcionar.</p>
+          </div>
+          <figure class="espec-visual">
+            <svg viewBox="0 0 520 230" role="img" aria-label="Laser a gravar as letras ETPR/TGEI numa tábua de madeira">
+              <rect x="24" y="22" width="472" height="14" rx="3" fill="#C3C8CF" stroke="#8d949e"/>
+
+              <rect x="40" y="112" width="440" height="72" rx="4" fill="#C79B63"/>
+              <rect x="40" y="184" width="440" height="12" rx="3" fill="#A57A45"/>
+              <rect x="40" y="112" width="440" height="3" fill="#D8B27F"/>
+
+              <text class="gravura" x="142" y="157" textLength="236" lengthAdjust="spacing">ETPR/TGEI</text>
+              <rect class="cobertura" x="136" y="120" width="248" height="56" fill="#C79B63"/>
+
+              <g transform="translate(138 0)">
+                <g class="cabeca-l">
+                  <rect x="-15" y="36" width="30" height="42" rx="4" fill="#20242B"/>
+                  <path d="M-10 46H10M-10 53H10M-10 60H10" stroke="#3b4049" stroke-width="2"/>
+                  <rect x="-5" y="78" width="10" height="14" fill="#C3C8CF"/>
+                  <g class="feixe-l">
+                    <line x1="0" y1="92" x2="0" y2="143" stroke="#E2231A" stroke-width="2.4"/>
+                    <circle class="faisca" cx="0" cy="143" r="9" fill="#ff6a3d" opacity=".35"/>
+                    <circle class="faisca" cx="0" cy="143" r="4.5" fill="#ffb347"/>
+                    <circle class="fumo" cx="-4" cy="136" r="3" fill="#8d949e"/>
+                    <circle class="fumo f2" cx="4" cy="136" r="2.5" fill="#8d949e"/>
+                    <circle class="fumo f3" cx="0" cy="136" r="3.5" fill="#8d949e"/>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </figure>
+        </article>
+
+        <!-- MATERIAIS -->
+        <article class="espec">
+          <div class="espec-texto">
+            <h3>Materiais</h3>
+            <dl class="materiais">
+              <div><dt>Laser</dt><dd>Laser Tree 10W (LT-40W-AA), 12 V PWM, 450 nm</dd></div>
+              <div><dt>Fonte</dt><dd>12 V 10 A 120 W</dd></div>
+              <div><dt>Motores</dt><dd>3× Nema 17 1.5 A (17HS4401)</dd></div>
+              <div><dt>Eletrónica</dt><dd>Arduino UNO + CNC Shield v3 + A4988</dd></div>
+              <div><dt>Guias</dt><dd>MGN15H (250 mm)</dd></div>
+              <div><dt>Polias</dt><dd>GT2 20T, furo de 5 mm</dd></div>
+              <div><dt>Correia</dt><dd>GT2 6 mm (5 metros)</dd></div>
+              <div><dt>Proteção</dt><dd>Óculos OD5+ (200–540 nm)</dd></div>
+              <div><dt>Parafusos</dt><dd>Kit M3 em inox</dd></div>
+              <div><dt>Finais de curso</dt><dd>Micro switches SPDT (10 un.)</dd></div>
+            </dl>
+          </div>
+          <figure class="espec-visual">
+            <div class="explode" id="impressora-3d" tabindex="0"></div>
+            <figcaption id="legenda-peca" class="legenda-peca" aria-live="polite">Passa o cursor sobre a impressora para ver as peças.</figcaption>
+          </figure>
+        </article>
+
+        <!-- SOFTWARE -->
+        <article class="espec">
+          <div class="espec-texto">
+            <h3>Software</h3>
+            <p>Dois programas que enviam o trabalho para a máquina. Escolhe o que for mais confortável para ti.</p>
+          </div>
+          <div class="espec-visual links-software">
+            <div class="link-software">
+              <div>
+                <h4>LaserGRBL</h4>
+                <p>Gratuito e para Windows. Simples para gravar imagens e enviar o G-code para a máquina.</p>
+              </div>
+              <a class="btn btn-principal" href="https://lasergrbl.com/" target="_blank" rel="noopener">Abrir site</a>
+            </div>
+            <div class="link-software">
+              <div>
+                <h4>LightBurn</h4>
+                <p>Pago, com período de teste gratuito. Mais completo para desenhar, preparar e controlar os cortes.</p>
+              </div>
+              <a class="btn btn-principal" href="https://lightburnsoftware.com/" target="_blank" rel="noopener">Abrir site</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LIGAÇÃO AO COMPUTADOR -->
+        <article class="espec">
+          <div class="espec-texto">
+            <h3>Ligação ao computador</h3>
+            <p class="valor">Dell Latitude 5400 ↔ Arduino UNO</p>
+            <p>A ligação é feita por cabo USB. O computador envia as instruções e o Arduino, com a CNC Shield, comanda os motores e o laser.</p>
+          </div>
+          <figure class="espec-visual">
+            <svg viewBox="0 0 560 250" role="img" aria-label="Portátil Dell Latitude 5400 ligado por USB ao Arduino UNO com CNC Shield">
+              <!-- portátil -->
+              <rect x="34" y="40" width="200" height="126" rx="9" fill="#20242B"/>
+              <rect x="44" y="50" width="180" height="106" rx="4" fill="#12151a"/>
+              <path d="M60 130 L92 78 L124 120 L156 70 L188 110 L208 86" fill="none" stroke="#E2231A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="100" class="traco"/>
+              <rect x="150" y="132" width="62" height="16" rx="3" fill="#3a8f6b"/>
+              <text x="181" y="144" text-anchor="middle" font-size="10" fill="#fff">Enviar</text>
+              <path d="M16 166H252L240 180H28Z" fill="#C3C8CF" stroke="#8d949e"/>
+              <rect x="116" y="166" width="40" height="4" rx="2" fill="#8d949e"/>
+              <text x="134" y="208" text-anchor="middle" class="rot-svg">Dell Latitude 5400</text>
+
+              <!-- cabo USB -->
+              <path d="M250 173C292 173 292 103 338 103" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+              <path class="cabo-dados" d="M250 173C292 173 292 103 338 103" fill="none" stroke="#E2231A" stroke-width="4" stroke-linecap="round"/>
+              <text x="304" y="150" class="rot-svg" font-size="13">USB</text>
+
+              <!-- Arduino + CNC Shield -->
+              <rect x="336" y="86" width="30" height="34" rx="2" fill="#B0B6BD" stroke="#8d949e"/>
+              <rect x="350" y="56" width="184" height="130" rx="8" fill="#00979C"/>
+              <rect x="364" y="64" width="158" height="114" rx="4" fill="#C62828"/>
+              <rect x="372" y="68" width="142" height="6" fill="#20242B"/>
+              <rect x="372" y="168" width="142" height="6" fill="#20242B"/>
+              <rect x="384" y="86" width="30" height="46" fill="#1f6f43"/><rect x="390" y="90" width="18" height="14" fill="#C3C8CF"/>
+              <rect x="424" y="86" width="30" height="46" fill="#1f6f43"/><rect x="430" y="90" width="18" height="14" fill="#C3C8CF"/>
+              <rect x="464" y="86" width="30" height="46" fill="#1f6f43"/><rect x="470" y="90" width="18" height="14" fill="#C3C8CF"/>
+              <rect x="378" y="142" width="26" height="22" fill="#1e5eb7"/>
+              <circle cx="438" cy="152" r="9" fill="#20242B"/><circle cx="438" cy="152" r="4" fill="#4b5260"/>
+              <circle cx="470" cy="152" r="9" fill="#20242B"/><circle cx="470" cy="152" r="4" fill="#4b5260"/>
+              <circle class="led" cx="357" cy="150" r="3" fill="#ffb347"/>
+              <circle class="led l2" cx="357" cy="162" r="3" fill="#ffb347"/>
+              <text x="442" y="208" text-anchor="middle" class="rot-svg">Arduino UNO + CNC Shield v3</text>
+            </svg>
+          </figure>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- TELA: DOWNLOADS -->
+    <section id="view-downloads" class="tela tela-texto" aria-labelledby="t-downloads" hidden>
+      <h1 id="t-downloads" tabindex="-1">Downloads</h1>
+      <p class="lead">Os programas que precisas para usar a CNC Laser.</p>
+
+      <!--
+        Para cada software:
+        1) copia o ficheiro (.zip ou .exe) para a pasta "downloads"
+        2) confirma que o nome do ficheiro no href é igual
+        3) troca o nome e a explicação pelos teus
+      -->
+      <div class="softwares">
+        <article class="software">
+          <div>
+            <h2>Software de controlo</h2>
+            <p>Liga o computador à máquina. Carregas o desenho, escolhes o material, a potência e a velocidade, e envias o trabalho para gravar ou cortar.</p>
+            <p class="meta">Versão: a definir</p>
+          </div>
+          <a class="btn btn-principal" href="downloads/software-controlo.zip" download>Descarregar</a>
+        </article>
+
+        <article class="software">
+          <div>
+            <h2>Software de design</h2>
+            <p>Serve para criar e preparar os desenhos antes de os enviares para a máquina. Exporta o resultado num formato que o software de controlo aceite.</p>
+            <p class="meta">Versão: a definir</p>
+          </div>
+          <a class="btn btn-principal" href="downloads/software-design.zip" download>Descarregar</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- TELA: SUPORTE -->
+    <section id="view-suporte" class="tela tela-texto" aria-labelledby="t-suporte" hidden>
+      <h1 id="t-suporte" tabindex="-1">Suporte</h1>
+      <p class="lead">Problemas comuns e como resolvê-los.</p>
+
+      <div class="faq">
+        <details>
+          <summary>A gravação sai fraca ou muito clara</summary>
+          <p>Aumenta a potência ou diminui a velocidade. Limpa também a lente com um pano próprio e confirma que o material está bem focado.</p>
+        </details>
+        <details>
+          <summary>O laser não corta o material por completo</summary>
+          <p>Faz mais uma passagem, diminui a velocidade e verifica a distância entre a lente e o material. Materiais mais grossos precisam de mais passagens.</p>
+        </details>
+        <details>
+          <summary>O desenho sai deslocado ou com os cantos tortos</summary>
+          <p>Verifica se as correias estão bem esticadas e se os parafusos das polias estão apertados. Diminuir a velocidade também ajuda.</p>
+        </details>
+        <details>
+          <summary>A máquina não liga ou o computador não a reconhece</summary>
+          <p>Confirma a fonte de alimentação e o cabo USB. Experimenta outra porta USB ou outro cabo e reinicia o programa de controlo.</p>
+        </details>
+        <details>
+          <summary>Há muito fumo ou cheiro a queimado</summary>
+          <p>Trabalha sempre com boa ventilação ou exaustão. Limpa os resíduos do tapete de corte e reduz a potência. Se vires chamas, desliga a máquina de imediato.</p>
+        </details>
+      </div>
+
+      <div class="manual">
+        <div>
+          <h2>Manual de utilização</h2>
+          <p>Guia completo da máquina, em PDF.</p>
+        </div>
+        <!-- Copia o PDF para a pasta "manuais" com este nome (ou muda o href) -->
+        <div class="acoes">
+          <a class="btn" href="manuais/manual-de-utilizacao.pdf" target="_blank" rel="noopener">Abrir manual</a>
+          <a class="btn btn-principal" href="manuais/manual-de-utilizacao.pdf" download>Descarregar PDF</a>
+        </div>
+      </div>
+
+      <div class="contacto">
+        <p class="aviso">Se não achou a solução, mande e-mail para o suporte.</p>
+        <p id="estado-copia" class="estado" role="status" aria-live="polite"></p>
+        <button type="button" id="copiar-email" class="btn btn-principal" aria-label="Copiar o email de suporte"></button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">© 2026 CNC Laser</footer>
+
+  <!-- Botão de tema (canto inferior direito, em todas as telas) -->
+  <button type="button" id="tema" class="tema" role="switch" aria-checked="false" aria-label="Modo escuro" title="Mudar para modo escuro">
+    <svg class="tema-fundo tema-fundo-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+    <svg class="tema-fundo tema-fundo-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg>
+    <span class="tema-bola" aria-hidden="true">
+      <svg class="icone-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+      <svg class="icone-lua" viewBox="0 0 24 24"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg>
+    </span>
+  </button>
+
+  <script src="script.js"></script>
+  <script src="animacoes.js"></script>
+</body>
+</html>
